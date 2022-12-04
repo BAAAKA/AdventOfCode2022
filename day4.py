@@ -1,18 +1,10 @@
 
-
-
 z = 0
 with open('tempInput.txt') as f:
     f = f.read().strip().split("\n")
-
     for i in range(len(f)):
-        temp = f[i].split(",")
-        x1 = temp[0].split("-")
-        x2 = temp[1].split("-")
-        print(f"{x1} and {x2}")
-        if x1[0] < x2[0] and x1[1] > x2[1]:
-            z+=1
-        elif x2[0] < x1[0] and x2[1] > x1[1]:
-            z+=1
-
+        dazbee = f[i].split(",")
+        s1, e1 = map(int, dazbee[0].split("-"))
+        s2, e2 = map(int, dazbee[1].split("-"))
+        if (s1 <=  s2 and e1 >= s2) or (s2 <= s1 and e2 >= s1): z += 1
 print(z)
