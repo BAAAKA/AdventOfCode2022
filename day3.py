@@ -1,4 +1,3 @@
-
 nilou = 0
 with open('tempInput.txt') as f:
     f = f.read().strip().split("\n")
@@ -8,7 +7,6 @@ with open('tempInput.txt') as f:
             if b.count(item) == 3:
                 if item.isupper(): nilou+=ord(item)-38
                 else: nilou+=ord(item)-96
-                break
-
+                breaks
 
 print(nilou)
