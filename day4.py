@@ -4,5 +4,6 @@ with open('tempInput.txt') as f:
 
     for i in range(len(f)):
         temp = f[i].split(",")
-
-    print(f)
+        x1 = temp[0].split("-")
+        x2 = temp[1].split("-")
+        print(f"{x1} and {x2}")
