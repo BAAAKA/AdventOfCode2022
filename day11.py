@@ -11,10 +11,10 @@ class monkey:
 
     def monkeOperation(self, old):
         item = eval(self.operation)
+        item = item%magicNumber
         return item
 
     def addItem(self, item):
-        #item = self.monkeOperation(item)
         self.startingItems.append(item)
 
     def conditionMet(self, item):
@@ -39,7 +39,7 @@ with open('tempInput.txt') as f:
             ifFalse = f[i+5][30:] # Throw to Monkey x
             monkeys.append(monkey(name, startingItems, operation, condition, ifTrue, ifFalse))
 
-
+magicNumber = 1
 for i2, m in enumerate(monkeys):
     print(f"== Moneky {i2} ==")
     print(m.name)
@@ -48,26 +48,30 @@ for i2, m in enumerate(monkeys):
     print(m.condition)
     print(m.ifTrue)
     print(m.ifFalse)
+    magicNumber *= m.condition
+
+
+print(magicNumber)
 
 print("##########################")
-for round in range(20):
+for round in range(10000):
     print(f"Starting round {round}")
     for monke in monkeys:
         print(f"Monkey {monke.name}:")
         for item in monke.startingItems:
             monke.inspectedItem()
-            print(f" Monkey inspects an item with a worry level of {item}")
+            #print(f" Monkey inspects an item with a worry level of {item}")
             item = monke.monkeOperation(item)
             #print(f"  Worry level is multiplied by {monke.operation} to {item}.")
             #item = int(item/3)
-            print(f"  Monkey gets bored with item. Worry level is divided by 3 to {item}")
+            #print(f"  Monkey gets bored with item. Worry level is divided by 3 to {item}")
             if monke.conditionMet(item):
-                print(f"  Current worry level is not divisible by {monke.condition}.")
-                print(f"  Item with worry level {item} is thrown to monkey {monke.ifTrue}.")
+                #print(f"  Current worry level is not divisible by {monke.condition}.")
+                #print(f"  Item with worry level {item} is thrown to monkey {monke.ifTrue}.")
                 monkeys[monke.ifTrue].addItem(item)
             else:
-                print(f"  Current worry level is!! divisible by {monke.condition}.")
-                print(f"  Item with worry level {item} is thrown to monkey {monke.ifFalse}.")
+                #print(f"  Current worry level is!! divisible by {monke.condition}.")
+                #print(f"  Item with worry level {item} is thrown to monkey {monke.ifFalse}.")
                 monkeys[monke.ifFalse].addItem(item)
         monke.clearItems()
 
@@ -77,4 +81,4 @@ for monke in monkeys:
     print("{}: {}, {}".format(monke.name, monke.startingItems, monke.inspectCount))
     inspected.append(monke.inspectCount)
 
-print(inspected)
+print(sorted(inspected))
