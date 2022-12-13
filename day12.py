@@ -16,12 +16,12 @@ def letToNr(letter):
 def posToStr(position):
     return '{},{}'.format(*position)
 
-lastPosition = [[20, 158]]
+lastPosition = [[0,0 ]]
 previousPositions = {'0,0'}
 
 # 31-4
 def canIgoThere(currentL, targetL):
-    return letToNr(currentL) - letToNr(targetL) <= 1
+    return letToNr(currentL) - letToNr(targetL) >= -1
 
 def christmas(position, previousPositions):
     row = position[0]
@@ -32,8 +32,8 @@ def christmas(position, previousPositions):
     left = grid(row, col-1, maxRow, maxCol)
     right = grid(row, col+1, maxRow, maxCol)
 
-    if current == "a":
-        print(f"FOUND a")
+    if current == "E":
+        print(f"FOUND E")
         exit()
 
     #print(f"{up} {down} {left} {right}")
@@ -86,8 +86,7 @@ for i in range(1000):
     print(f"Santa says its day {i}")
     lastPosition = callChristmas(lastPosition, previousPositions)
     print(f"{lastPosition} {previousPositions}")
-    if i%30==0:
-        printMap(lastPosition)
+    printMap(lastPosition)
 
 
 
