@@ -3,18 +3,16 @@ remRam = []
 with open('tempInput.txt') as f:
     f = f.read().split("\n")
     for i in range(len(f)):
-        if i%3==0:
+        if len(str(f[i]))>0:
             rem = eval(f[i])
-            ram = eval(f[i+1])
-            remRam.append([rem, ram])
-            print([rem, ram])
+            remRam.append(rem)
+            print(f[i])
 
 def getAraVal(ara, index):
     if len(ara)-1 >= index: # 3 <= 4
         return ara[index]
     else:
         return -1
-
 
 def compare(rem, ram):
     longer = len(rem)
@@ -34,11 +32,8 @@ def compare(rem, ram):
         elif ram_i == -1:
             return "rem"
 
-        print(f"Compare {rem} vs {ram}")
-        print(f"Compare {rem_i} vs {ram_i}")
-
         if type(rem_i) == list or type(ram_i) == list:
-            #print("Oh, something is a list or both are lists, time to lists")
+            print("Oh, something is a list or both are lists, time to lists")
             if type(rem_i) == list and type(ram_i) == list:
                 naroehoedoe = compare(rem_i, ram_i)
             elif type(rem_i) == list:
@@ -46,42 +41,51 @@ def compare(rem, ram):
             else:
                 naroehoedoe = compare([rem_i], ram_i)
         elif rem_i == ram_i:
-            print("Equal")
             naroehoedoe = 'equal'
         elif rem_i > ram_i:
-            print("Rem is bigger")
             naroehoedoe = "rem"
         else:
-            print("Ram is bigger")
             naroehoedoe = "ram"
 
         if naroehoedoe == 'equal':
             pass
         else:
             return naroehoedoe
-
     return 'equal'
 
 print("###############################")
-kindred = 0
 
 
-for i in range(len(remRam)):
-    print(f"== {i+1} ==")
-    a = remRam[i]
-    returnValue = compare(*a)
-    if returnValue == 'rem':
-        print(">>> Wrong")
-    else:
-        print(">>> Right")
-        kindred += i+1
+def sortingStuff(remRam):
+    rowz = len(remRam)
+    for i in range(1, rowz):
+        if compare(remRam[i-1], remRam[i]) == 'ram':
+            pass
+        else:
+            temp = remRam[i-1].copy()
+            remRam[i - 1] = remRam[i]
+            remRam[i] = temp
+    return remRam
 
-#a = [[[0], [[[], 8, 2, 10], [[], [7, 8, 9, 4]]], [2, [[7, 10, 4, 0], 1, 10], 10]], [[[[0, 5, 3, 8], 4], [5], [[0, 2, 2, 8, 0], 8, 7, [4, 8, 10]], 1]]]
-#print(compare(*a))
 
-print(kindred)
+def itsBigBrainTime(remRam):
+    lastremRam = "hahahHAHFSEHFEWSH"
+    print("AAAAAAA")
+    while lastremRam != remRam:
+        lastremRam = remRam.copy()
+        remRam = sortingStuff(remRam)
+    print("DONE")
+    return remRam
 
-# 3505 too low
+remRam = itsBigBrainTime(remRam)
 
-# Ram -> Right -> Right Order
+keyIndex = []
+for i, r in enumerate(remRam):
+    print(r)
+    if r in [[[2]], [[6]]]:
+        keyIndex.append(i+1)
+
+print(keyIndex)
+
+# Ram -> Right -> Right Order -> No Switch
 # Rem -> left -> Wrong Order
