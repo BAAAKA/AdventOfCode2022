@@ -1,5 +1,4 @@
-
-
+import time
 height = 'Sabcdefghijklmnopqrstuvwxyz_0'
 
 def grid(row, col, maxRow, maxCol):
@@ -70,7 +69,8 @@ def printMap(positions):
         for col in range(maxCol):
             #print(f"{row}, {col}")
             if [row, col] in positions:
-                print("0", end="")
+                #print("0", end="")
+                print("\033[0;31m" + '0' + "\033[0m", end="")
             else:
                 print(grid(row, col, maxRow, maxCol), end="")
         print("")
@@ -83,9 +83,11 @@ with open('tempInput.txt') as f:
 
 print("###################")
 for i in range(1000):
-    print(f"Santa says its day {i}")
+    #print(f"Santa says its day {i}")
     lastPosition = callChristmas(lastPosition, previousPositions)
-    print(f"{lastPosition} {previousPositions}")
+    #print(f"{lastPosition} {previousPositions}")
+    print("")
+    time.sleep(0.5)
     printMap(lastPosition)
 
 
