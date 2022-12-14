@@ -87,7 +87,7 @@ for i in range(1000):
     lastPosition = callChristmas(lastPosition, previousPositions)
     #print(f"{lastPosition} {previousPositions}")
     print("")
-    time.sleep(0.5)
+    time.sleep(0.1)
     printMap(lastPosition)
 
 
