@@ -1,6 +1,4 @@
 
-from setuptools._distutils.command.config import config
-
 walls = []
 wallsAll = []
 field = []
