@@ -48,8 +48,6 @@ def amIalone(x, y, sensors):
 def isInField(x, y):
     return x<xymax and y<xymax and y>0 and x>0
 
-
-
 def getBorderCor(sensor):
     x = sensor[0]
     y = sensor[1]
@@ -81,8 +79,6 @@ def getBorderCor(sensor):
         else:
             man_x+=1
         man_y-=1
-
-
 
 testSensor = (2,2,2)
 getBorderCor(testSensor)
