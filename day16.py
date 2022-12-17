@@ -1,37 +1,46 @@
 import re
-
+import time
 def nextGeneration(position, remainRounds, valveDict):
     nextPos = []
-    print(f"start {position}")
-
     posName = position[0]
     tif = position[1]
-    history = position[2]
-    print(f"Im {posName} and can go to {valveDict[posName]}")
+    opened = position[2]
+    history = position[3]
+    #print(f"Im {posName} and can go to {valveDict[posName]}")
+    print(opened)
+    if len(opened) == 6:
+        print("Same length, return position")
+        return [position]
 
-    tempTif = remainRounds*valveDict[posName][0]
-    nextPos.append([posName, tempTif, []])
-    print(nextPos)
-
-
-    # print(f"A {valveDict[posName][1]}")
-    history.append(posName)
     for p in valveDict[posName][1]:
         if not p in history:
-            nextPos.append([p, tif, history])
+            nextPos.append([p, tif, opened, history+[posName]])
+
+    if valveDict[posName][0] != 0 and posName not in opened:
+        tempTif = remainRounds*valveDict[posName][0]
+        nextPos.append([posName, tif+tempTif, opened + [posName], []])
 
     return nextPos
 
 
-def printAllPositions(allPos):
-    print("++=======")
-    for pos in allPos:
-        print(pos)
+def printAllPositions(allPos, valveDict, generation):
+    highestVal = 0
+    print(f"======= Print of Generation {generation} =======")
+    for key in valveDict.keys():
+        print(f"{key}", end='')
+        for pos in allPos:
+            if key == pos[0]:
+                print(f" {pos[1]}, ", end='')
+                if pos[1]>highestVal:
+                    highestVal = pos[1]
+        print("")
+    print(f"Highest Val is {highestVal}, {len(allPos)}")
+
 
 def main():
     valveDict = {}
-    allPos = [ ["AA", 0, []] ] # Pos, tif, places since last opening
-    remainRounds = 2
+    allPos = [["AA", 0, [], []]] # Pos, tif, , places opened, places since last opening
+    rounds = 30-2
     nextallPos = []
     with open('tempInput.txt') as f:
         f = f.read().split("\n")
@@ -45,15 +54,20 @@ def main():
 
     for valve in valveDict.keys():
         print(f"{valve} = {valveDict[valve]}")
-
-    for i in range(2):
+    cutVal = 0
+    for i in range(1, rounds):
+        print(f"cutValue is {cutVal}, therefore {int(cutVal / 1.5)}")
+        nextallPos = []
         for position in allPos:
-            print(position)
-            nextallPos += nextGeneration(position, remainRounds, valveDict)
-        printAllPositions(nextallPos)
+            if position[1]+500 < int(cutVal):
+                continue #Skip this one
+            elif position[1]>cutVal:
+                cutVal = position[1]
+            nextallPos += nextGeneration(position, (rounds-i), valveDict)
+        printAllPositions(nextallPos, valveDict, i)
         allPos = nextallPos
 
-
+# Too High 2054
 
 if __name__ == "__main__":
     main()
